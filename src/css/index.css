@@ -1,5 +1,5 @@
 table, th, td a{
-    border:dotted 2px rgb(134, 101, 224);
+    border:dotted 5px yellow;
     border-collapse: collapse;
     padding:10px;
     text-align: center;  
