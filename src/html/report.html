@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Document</title>
+</head>
+
+<body onload="AllExposures()">
+    <div class="wrapper">
+        <h1> Epidemology Report</h1>
+        <div>
+            <select name="CitySelect" id="City" onchange="FilterByCity()">
+                <option value="filter by city">filter by city</option>
+                <option value="Jerusalem">Jerusalem</option>
+                <option value="Beit Shemesh">Beit shemesh</option>
+                <option value="Bnei Brak">Bnei Brak </option>
+                <option value="Modyin">Modyin </option>
+                <option value="Tel Aviv">Tel Aviv </option>
+                <option value="Tzfat">Tzfat </option>
+            </select>
+
+            <button class="btns" onclick="SortByDate()">Sort by date</button>
+            
+            <ul id="listExposures"></ul>
+
+        </div>
+    </div>
+</body>
+<script src="../js/index.js"></script>
+
+</html>

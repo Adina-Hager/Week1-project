@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../css/index.css">
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrapper">
+    <h1>Report your path</h1>
+    <input type="text" placeholder="Patient id" id="patientId" onchange="ShowById()">
+  
+    <br>
+    <table id="tableExposures">
+        <tr>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>City</th>
+            <th>Location</th>
+            <th>Delete</th>
+        </tr>
+   
+    </table>
+    <br>
+    <input id="start" type="datetime-local" >
+    <input id="end" type="datetime-local">
+    <select name="CitySelect" id="city">
+        <option value="Jerusalem">Jerusalem</option>
+        <option value="Beit Shemesh">Beit Shemesh</option>
+        <option value="Bnei Brak">Bnei Brak </option>
+        <option value="Modyin">Modyin </option>
+        <option value="Tel Aviv">Tel Aviv </option>
+        <option value="Tzfat">Tzfat </option>
+    </select>
+    <input id="location"type="text" placeholder="location">
+    <br>
+    <button class="btns" id="btnAdd">Add location</button>
+
+   </div>
+    
+  
+</body>
+<script src="../js/index.js"></script>
+
+</html>
