@@ -54,35 +54,40 @@ arrUsers[2].userLocations.push(arrLocations[3]);
 
 
 function addExposure() {
+    console.log("after arrloc")
     let id = document.getElementById("patientId").value;
     let start = document.getElementById("start").value;
     let end = document.getElementById("end").value;
     let city = document.getElementById("city").value;
     let location = document.getElementById("location").value;
     let newLocation = new userLocation(start, end, city, location);
-    fetch('https://localhost:44337/api/Locations/addExposure/'+id,{
-        methos:'POST',
-        headers:{'Content-Type': 'application/json',},
-        body:JSON.stringify(newLocation),
-  
-    }).then(()=>{
-    console.log("success");
-    // arrLocations.push(newLocation);
-    // arrUsers.push(new user(id));
-    // arrUsers.where(patientId === id).userLocations.push(newLocation);
-    // console.log(arrExposures);
-    ShowById();}
-    ).catch(error=>{"Error:",error});}
-    
+    fetch('https://localhost:44337/api/Locations/addExposure/' + id, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify(newLocation),
 
-   
+    }).then(() => {
+        console.log("success");
+        // arrLocations.push(newLocation);
+        // arrUsers.push(new user(id));
+        // arrUsers.where(patientId === id).userLocations.push(newLocation);
+        // console.log(arrExposures);
+        console.log(arrUsers[id].userLocations);
+        ShowById();
+    }
+    ).catch(error => { "Error:", error });
+}
 
-btnAdd.onclick = addExposure();
+
+
+
+// btnAdd.onclick = addExposure();
 
 
 function ShowById() {
-    let id = idChange.value;
-    let arrData=[]
+    const id = document.getElementById("patientId").value;
+    let arrData = [];
+    console.log(id);
     fetch('https://localhost:44337/api/Locations/getByUserId/' + id, {
         method: 'GET',
         headers: {
@@ -92,20 +97,24 @@ function ShowById() {
     }).then(response =>
         response.json()
     ).then(data => {
-        arrData=data;
+        arrData = data;
+        console.log(arrData);
+
         tbl.innerHTML = ` <tr>
     <th>Start date</th>
     <th>End date</th>
     <th>City</th>
     <th>Location</th>
     <th>Delete</th>
-</tr>`
-    let table;
-    
-    // let sel=document.getElementById("CitySelect").options;
-    arrData.forEach(item => {
-        if (item.patientId === id) {
-            item.userLocations.forEach(itemL => {
+    </tr>`
+        let table;
+
+
+        // let sel=document.getElementById("CitySelect").options;
+        arrData.forEach(itemL => {
+            {
+
+                console.log(itemL)
                 table = tbl;
                 let row = table.insertRow();
                 let cell1 = row.insertCell();
@@ -118,15 +127,18 @@ function ShowById() {
                 cell4.innerHTML = itemL.location;
                 let cell5 = row.insertCell();
                 cell5.innerHTML = "<button  onclick='deleteExposure()'; id='btnEdit';>X</button>"
-            })
-        }});
+
+            }
+        });
 
 
-    });}
+    });
+}
 
 
 function deleteExposure() {
     // event.target will be the input element.
+    
     let td = event.target.parentNode;
     let tr = td.parentNode; // the row to be removed
     tr.parentNode.removeChild(tr);
@@ -135,6 +147,8 @@ function deleteExposure() {
 
 function AllExposures() {
     let arrLoc = [];
+    console.log("after arrloc")
+    
     fetch('https://localhost:44337/api/Locations/getAllLocations', {
         method: 'GET',
         headers: {
