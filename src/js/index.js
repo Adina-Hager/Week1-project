@@ -145,7 +145,11 @@ function FilterByCity() {
     if (city === "filter by city") {
         AllExposures();
     }
+<<<<<<< HEAD
     arrLocations.forEach((item) => {
+=======
+    arrExposures.forEach((item) => {
+>>>>>>> a50158f741c92a08cd5d8f8505a44353fe097985
         if (item.city === city) {
             let listItem = document.createElement("li");
             let b = JSON.stringify(item);
@@ -156,6 +160,7 @@ function FilterByCity() {
         }
     })
 
+<<<<<<< HEAD
 
     let myPromise = new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -167,6 +172,16 @@ function FilterByCity() {
     myPromise.then((res) => {
         console.log(res);
     })
+=======
+    console.log("hello")
+
+   
+
+   
+
+ 
+
+>>>>>>> a50158f741c92a08cd5d8f8505a44353fe097985
 
 }
 
