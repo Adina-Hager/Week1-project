@@ -113,11 +113,11 @@ function deleteExposure() {
 // deleteEx.onclick=deleteExposure;
 
 function AllExposures() {
-    fetch('http://localhost:5056/api/Locations/getAllLocations')
+    let arrLoc=fetch('http://localhost:5056/api/Locations/getAllLocations')
         .then(() => {
             let list = document.getElementById("listExposures");
             list.innerHTML = "";
-            arrLocations.forEach((item) => {
+            arrLoc.forEach((item) => {
                 let listItem = document.createElement("li");
                 console.log(item);
                 let newItem = JSON.stringify(item);
@@ -133,7 +133,7 @@ function AllExposures() {
                     console.error('Error:', error);
                 });
 
-            // })
+            })
         }
 
 
@@ -177,7 +177,3 @@ function FilterByCity() {
 
 
             }
-
-
-
-
