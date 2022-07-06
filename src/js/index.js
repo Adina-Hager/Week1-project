@@ -111,18 +111,31 @@ function deleteExposure() {
 // deleteEx.onclick=deleteExposure;
 
 function AllExposures() {
-    let list = document.getElementById("listExposures");
-    list.innerHTML = "";
-    arrLocations.forEach((item) => {
-        let listItem = document.createElement("li");
-        console.log(item);
-        let newItem = JSON.stringify(item);
-        delete (newItem.patientId);
-        b = newItem.replace("{", "")
-        b = b.replace("}", "")
-        listItem.innerHTML = b;
-        list.appendChild(listItem);
-    })
+    fetch('http://localhost:5056/api/Locations/getAllLocations' +{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(new_info_location),
+            })
+                .then(() => {
+                    console.log('Success');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+    // let list = document.getElementById("listExposures");
+    // list.innerHTML = "";
+    // arrLocations.forEach((item) => {
+    //     let listItem = document.createElement("li");
+    //     console.log(item);
+    //     let newItem = JSON.stringify(item);
+    //     delete (newItem.patientId);
+    //     b = newItem.replace("{", "")
+    //     b = b.replace("}", "")
+    //     listItem.innerHTML = b;
+    //     list.appendChild(listItem);
+    // })
 }
 
 
