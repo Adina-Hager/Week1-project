@@ -17,19 +17,18 @@ myPromise.then((resMessage) => {
 let myArr=["hello","how","are","you"];
 console.log(typeof myArr[1])
 function makeAllCaps(arr){
+    let newArr=[];
     return new Promise(function(resolve,reject){
         arr.forEach(item => {
             if(typeof item!="string")
            { throw new Error("item not string");}
             else{
-                item.forEach(letter=>{
-                    letter.toUpperCase();
-                })
-                
+               let newString=item.toUpperCase();
+               newArr.push(newString);   
             }
         })
-        console.log(arr)
-        resolve(arr)
+        console.log(newArr)
+        resolve(newArr)
     })
 }
 
