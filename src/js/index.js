@@ -113,8 +113,17 @@ function deleteExposure() {
 // deleteEx.onclick=deleteExposure;
 
 function AllExposures() {
-    let arrLoc=fetch('https://localhost:44337/api/Locations/getAllLocations')
-        .then(() => {
+    let arrLoc=[];
+    fetch('https://localhost:44337/api/Locations/getAllLocations',{
+        method:'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response=>
+        response.json())
+        .then(data=>{
+            arrLoc=data;
             let list = document.getElementById("listExposures");
             list.innerHTML = "";
             arrLoc.forEach((item) => {
@@ -128,7 +137,7 @@ function AllExposures() {
                 list.appendChild(listItem);
 
                 console.log('Success');
-            })
+        })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
