@@ -66,7 +66,7 @@ function addExposure() {
     console.log(arrExposures);
     ShowById();
 }
-btnAdd.onclick = addExposure;
+btnAdd.onclick = addExposure();
 
 
 function ShowById() {
@@ -113,7 +113,7 @@ function deleteExposure() {
 // deleteEx.onclick=deleteExposure;
 
 function AllExposures() {
-    let arrLoc=fetch('http://localhost:5056/api/Locations/getAllLocations')
+    let arrLoc=fetch('https://localhost:44337/api/Locations/getAllLocations')
         .then(() => {
             let list = document.getElementById("listExposures");
             list.innerHTML = "";
