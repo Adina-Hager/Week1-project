@@ -7,36 +7,38 @@ let isDescendingOrder = false;
 
 class exposure {
     constructor(user, location) {
-      this.user=user;
-      this.location=location;
-}}
+        this.user = user;
+        this.location = location;
+    }
+}
 
 
 class userLocation {
-        constructor( start, end, city, location) {
-            
-            this.start = start;
-            this.end = end;
-            this.city = city;
-            this.location = location;
-        }
+    constructor(start, end, city, location) {
+
+        this.start = start;
+        this.end = end;
+        this.city = city;
+        this.location = location;
+    }
 }
 
 class user {
     constructor(patientId) {
         this.patientId = patientId;
         this.userLocations = [];
-    }}
+    }
+}
 
 let arrLocations = [
-    new userLocation( "2022-06-29T11:09", "2022-06-29T11:14", "Beit Shemesh", "Library"),
-    new userLocation( "2022-06-29T11:09", "2022-06-29T11:14", "Jerusalem", "Store"),
-    new userLocation( "2022-06-28T11:09", "2022-06-28T11:30", "Tzfat", "Library"),
-    new userLocation( "2022-06-29T11:09", "2022-06-29T11:14", "Beit Shemesh", "Library"),
+    new userLocation("2022-06-29T11:09", "2022-06-29T11:14", "Beit Shemesh", "Library"),
+    new userLocation("2022-06-29T11:09", "2022-06-29T11:14", "Jerusalem", "Store"),
+    new userLocation("2022-06-28T11:09", "2022-06-28T11:30", "Tzfat", "Library"),
+    new userLocation("2022-06-29T11:09", "2022-06-29T11:14", "Beit Shemesh", "Library"),
 
 ];
 
-let arrUsers=[
+let arrUsers = [
     new user("1"),
     new user("2"),
     new user("3"),
@@ -57,10 +59,10 @@ function addExposure() {
     let end = document.getElementById("end").value;
     let city = document.getElementById("city").value;
     let location = document.getElementById("location").value;
-    let newLocation=new userLocation(start,end,city,location);
+    let newLocation = new userLocation(start, end, city, location);
     arrLocations.push(newLocation);
     arrUsers.push(new user(id));
-    arrUsers.where(patientId===id).userLocations.push(newLocation);
+    arrUsers.where(patientId === id).userLocations.push(newLocation);
     console.log(arrExposures);
     ShowById();
 }
@@ -80,7 +82,7 @@ function ShowById() {
     // let sel=document.getElementById("CitySelect").options;
     arrUsers.forEach(item => {
         if (item.patientId === id) {
-            item.userLocations.forEach(itemL=>{
+            item.userLocations.forEach(itemL => {
                 table = tbl;
                 let row = table.insertRow();
                 let cell1 = row.insertCell();
@@ -94,7 +96,7 @@ function ShowById() {
                 let cell5 = row.insertCell();
                 cell5.innerHTML = "<button  onclick='deleteExposure()'; id='btnEdit';>X</button>"
             })
-           
+
 
 
         }
@@ -111,74 +113,70 @@ function deleteExposure() {
 // deleteEx.onclick=deleteExposure;
 
 function AllExposures() {
-    fetch('http://localhost:5056/api/Locations/getAllLocations' +{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(new_info_location),
+    fetch('http://localhost:5056/api/Locations/getAllLocations')
+        .then(() => {
+            let list = document.getElementById("listExposures");
+            list.innerHTML = "";
+            arrLocations.forEach((item) => {
+                let listItem = document.createElement("li");
+                console.log(item);
+                let newItem = JSON.stringify(item);
+                delete (newItem.patientId);
+                b = newItem.replace("{", "")
+                b = b.replace("}", "")
+                listItem.innerHTML = b;
+                list.appendChild(listItem);
+
+                console.log('Success');
             })
-                .then(() => {
-                    console.log('Success');
-                })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-    // let list = document.getElementById("listExposures");
-    // list.innerHTML = "";
-    // arrLocations.forEach((item) => {
-    //     let listItem = document.createElement("li");
-    //     console.log(item);
-    //     let newItem = JSON.stringify(item);
-    //     delete (newItem.patientId);
-    //     b = newItem.replace("{", "")
-    //     b = b.replace("}", "")
-    //     listItem.innerHTML = b;
-    //     list.appendChild(listItem);
-    // })
-}
+
+            // })
+        }
 
 
 function SortByDate() {
-    if (isDescendingOrder) {
-        arrLocations.sort((a, b) => (a.start > b.start ? 1 : -1));
-        isDescendingOrder = false;
-    }
-    else {
-        arrLocations.sort((a, b) => (a.start > b.start ? -1 : 1));
-        isDescendingOrder = true;
-    }
-    AllExposures();
-}
+                if (isDescendingOrder) {
+                    arrLocations.sort((a, b) => (a.start > b.start ? 1 : -1));
+                    isDescendingOrder = false;
+                }
+                else {
+                    arrLocations.sort((a, b) => (a.start > b.start ? -1 : 1));
+                    isDescendingOrder = true;
+                }
+                AllExposures();
+            }
 
 function FilterByCity() {
-    const city = document.getElementById("City").value;
-    let list = document.getElementById("listExposures");
-    list.innerHTML = "";
-    if (city === "filter by city") {
-        AllExposures();
-    }
-    arrLocations.forEach((item) => {
-        if (item.city === city) {
-            let listItem = document.createElement("li");
-            let b = JSON.stringify(item);
-            b = b.replace("{", "")
-            b = b.replace("}", "")
-            listItem.innerHTML = b;
-            list.appendChild(listItem);
-        }
-    })
+                const city = document.getElementById("City").value;
+                let list = document.getElementById("listExposures");
+                list.innerHTML = "";
+                if (city === "filter by city") {
+                    AllExposures();
+                }
+                arrLocations.forEach((item) => {
+                    if (item.city === city) {
+                        let listItem = document.createElement("li");
+                        let b = JSON.stringify(item);
+                        b = b.replace("{", "")
+                        b = b.replace("}", "")
+                        listItem.innerHTML = b;
+                        list.appendChild(listItem);
+                    }
+                })
 
-    console.log("hello")
-
-   
-
-   
-
- 
+                console.log("hello")
 
 
-}
+
+
+
+
+
+
+            }
 
 
 
