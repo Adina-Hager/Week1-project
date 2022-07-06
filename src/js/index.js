@@ -37,7 +37,7 @@ btnAdd.onclick = addExposure;
 
 
 function ShowById() {
-    tbl.innerHTML=` <tr>
+    tbl.innerHTML = ` <tr>
     <th>Start date</th>
     <th>End date</th>
     <th>City</th>
@@ -83,9 +83,9 @@ function AllExposures() {
         let listItem = document.createElement("li");
         console.log(item);
         let newItem = JSON.stringify(item);
-         delete (newItem.patientId);
-        b =newItem.replace("{","")
-        b =b.replace("}","")
+        delete (newItem.patientId);
+        b = newItem.replace("{", "")
+        b = b.replace("}", "")
         listItem.innerHTML = b;
         list.appendChild(listItem);
     })
@@ -104,25 +104,61 @@ function SortByDate() {
     AllExposures();
 }
 
-function FilterByCity(){
-    const city=document.getElementById("City").value;
+function FilterByCity() {
+    const city = document.getElementById("City").value;
     let list = document.getElementById("listExposures");
-    list.innerHTML="";
-    if(city==="filter by city"){
+    list.innerHTML = "";
+    if (city === "filter by city") {
         AllExposures();
     }
-    arrExposures.forEach((item)=>{
-        if(item.city===city){
+    arrExposures.forEach((item) => {
+        if (item.city === city) {
             let listItem = document.createElement("li");
-            let b= JSON.stringify(item);
-            b =b.replace("{","")
-            b =b.replace("}","")
+            let b = JSON.stringify(item);
+            b = b.replace("{", "")
+            b = b.replace("}", "")
             listItem.innerHTML = b;
             list.appendChild(listItem);
         }
     })
 
-    
+    console.log("hello")
+
+    const myPromise = new Promise((result, reject) => {
+        setTimeout(() => {
+            let num = Math.floor(Math.random() * 10);
+            result(num);
+        }, 3000);
+    })
+
+    myPromise.then((resMessage) => {
+        console.log((resMessage));
+    }
+    )
+
+    const prom=(arr)=>new Promise(makeAllCaps(resolve,reject)=>{
+       arr.forEach(item => {
+        if(typeof item!=String)
+       { throw new Error("item not string");}
+        else{
+            item.toUpperCase();
+        }
+    })
+       resolve(arr);
+
+    }).then(sortWords(resolve)=>{
+        return new Promise((res)=>{
+            arr.sort();
+            res(arr);
+
+        }
+        )
+       
+    });
+
+ 
+
+
 }
 
 
