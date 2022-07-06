@@ -124,37 +124,9 @@ function FilterByCity() {
 
     console.log("hello")
 
-    const myPromise = new Promise((result, reject) => {
-        setTimeout(() => {
-            let num = Math.floor(Math.random() * 10);
-            result(num);
-        }, 3000);
-    })
+   
 
-    myPromise.then((resMessage) => {
-        console.log((resMessage));
-    }
-    )
-
-    const prom=(arr)=>new Promise(makeAllCaps(resolve,reject)=>{
-       arr.forEach(item => {
-        if(typeof item!=String)
-       { throw new Error("item not string");}
-        else{
-            item.toUpperCase();
-        }
-    })
-       resolve(arr);
-
-    }).then(sortWords(resolve)=>{
-        return new Promise((res)=>{
-            arr.sort();
-            res(arr);
-
-        }
-        )
-       
-    });
+   
 
  
 
