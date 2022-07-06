@@ -60,12 +60,23 @@ function addExposure() {
     let city = document.getElementById("city").value;
     let location = document.getElementById("location").value;
     let newLocation = new userLocation(start, end, city, location);
-    arrLocations.push(newLocation);
-    arrUsers.push(new user(id));
-    arrUsers.where(patientId === id).userLocations.push(newLocation);
-    console.log(arrExposures);
-    ShowById();
-}
+    fetch('https://localhost:44337/api/Locations/addExposure/'+id,{
+        methos:'POST',
+        headers:{'Content-Type': 'application/json',},
+        body:JSON.stringify(newLocation),
+  
+    }).then(()=>{
+    console.log("success");
+    // arrLocations.push(newLocation);
+    // arrUsers.push(new user(id));
+    // arrUsers.where(patientId === id).userLocations.push(newLocation);
+    // console.log(arrExposures);
+    ShowById();}
+    ).catch(error=>{"Error:",error});}
+    
+
+   
+
 btnAdd.onclick = addExposure();
 
 
