@@ -70,7 +70,19 @@ btnAdd.onclick = addExposure();
 
 
 function ShowById() {
-    tbl.innerHTML = ` <tr>
+    let id = idChange.value;
+    let arrData=[]
+    fetch('https://localhost:44337/api/Locations/getByUserId/' + id, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response =>
+        response.json()
+    ).then(data => {
+        arrData=data;
+        tbl.innerHTML = ` <tr>
     <th>Start date</th>
     <th>End date</th>
     <th>City</th>
@@ -78,9 +90,9 @@ function ShowById() {
     <th>Delete</th>
 </tr>`
     let table;
-    let id = idChange.value;
+    
     // let sel=document.getElementById("CitySelect").options;
-    arrUsers.forEach(item => {
+    arrData.forEach(item => {
         if (item.patientId === id) {
             item.userLocations.forEach(itemL => {
                 table = tbl;
@@ -96,12 +108,10 @@ function ShowById() {
                 let cell5 = row.insertCell();
                 cell5.innerHTML = "<button  onclick='deleteExposure()'; id='btnEdit';>X</button>"
             })
+        }});
 
 
-
-        }
-    });
-}
+    });}
 
 
 function deleteExposure() {
@@ -113,17 +123,17 @@ function deleteExposure() {
 // deleteEx.onclick=deleteExposure;
 
 function AllExposures() {
-    let arrLoc=[];
-    fetch('https://localhost:44337/api/Locations/getAllLocations',{
-        method:'GET',
+    let arrLoc = [];
+    fetch('https://localhost:44337/api/Locations/getAllLocations', {
+        method: 'GET',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-    }).then(response=>
+    }).then(response =>
         response.json())
-        .then(data=>{
-            arrLoc=data;
+        .then(data => {
+            arrLoc = data;
             let list = document.getElementById("listExposures");
             list.innerHTML = "";
             arrLoc.forEach((item) => {
@@ -137,52 +147,58 @@ function AllExposures() {
                 list.appendChild(listItem);
 
                 console.log('Success');
-        })
+            })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
 
-            })
-        }
+        })
+}
 
 
 function SortByDate() {
-                if (isDescendingOrder) {
-                    arrLocations.sort((a, b) => (a.start > b.start ? 1 : -1));
-                    isDescendingOrder = false;
-                }
-                else {
-                    arrLocations.sort((a, b) => (a.start > b.start ? -1 : 1));
-                    isDescendingOrder = true;
-                }
-                AllExposures();
-            }
+
+    if (isDescendingOrder) {
+        arrLocations.sort((a, b) => (a.start > b.start ? 1 : -1));
+        isDescendingOrder = false;
+    }
+    else {
+        arrLocations.sort((a, b) => (a.start > b.start ? -1 : 1));
+        isDescendingOrder = true;
+    }
+    AllExposures();
+}
 
 function FilterByCity() {
-                const city = document.getElementById("City").value;
-                let list = document.getElementById("listExposures");
-                list.innerHTML = "";
-                if (city === "filter by city") {
-                    AllExposures();
-                }
-                arrLocations.forEach((item) => {
-                    if (item.city === city) {
-                        let listItem = document.createElement("li");
-                        let b = JSON.stringify(item);
-                        b = b.replace("{", "")
-                        b = b.replace("}", "")
-                        listItem.innerHTML = b;
-                        list.appendChild(listItem);
-                    }
-                })
-
-                console.log("hello")
-
-
-
-
-
-
-
-
+    let arrData = [];
+    const city = document.getElementById("City").value;
+    let list = document.getElementById("listExposures");
+    fetch('https://localhost:44337/api/Locations/getByCity/' + city, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(response =>
+        response.json()
+    ).then(data => {
+        arrData = data;
+        list.innerHTML = "";
+        if (city === "filter by city") {
+            AllExposures();
+        }
+        arrData.forEach((item) => {
+            if (item.city === city) {
+                let listItem = document.createElement("li");
+                let b = JSON.stringify(item);
+                b = b.replace("{", "")
+                b = b.replace("}", "")
+                listItem.innerHTML = b;
+                list.appendChild(listItem);
             }
+        })
+
+    })
+
+
+}
